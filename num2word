@@ -1,0 +1,37 @@
+low=["Zero","One","Two","Three","Four","Five","Six","Seven","Eight","Nine"]
+then=["Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"]
+mid=["Ten","Twenty","Thirty","Fourty","Fifty","Sixty","Seventy","Eighty","Ninety"]
+high=["Hundred","Thousand","Million","Billion"]
+
+def hund2word(hund:int):
+    word=""
+    a=hund%100
+    if 0!=a and a<10:
+        word+=low[a]
+    elif 10<=a<20:
+        word+=then[a%10]
+    elif 20<=a:
+        word+=mid[a//10-1]
+        if a%10!=0:
+            word+=" "+low[a%10]
+    b=hund//100
+    if b!=0:
+        word=low[b]+" "+high[0]+" "+word
+    return word
+def num2word(num:int):
+    if num==0:
+        return low[num]
+    else:
+        store=list()
+        while num!=0:
+            store.append(num%1000)
+            num//=1000
+        word=""
+        i=len(store)
+        for num in reversed(store):
+            word+=hund2word(num)
+            if i!=1:
+                word+=" "+high[i-1]+" "
+                i-=1
+        print(word)
+num2word(int(input()))
